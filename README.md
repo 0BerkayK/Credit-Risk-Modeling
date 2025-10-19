@@ -1,91 +1,124 @@
 # Credit-Risk-Modeling
 
-# Credit Risk Key Metrics
+This project focuses on estimating Probability of Default (PD) using different machine learning models and performing risk-based portfolio evaluations such as Expected Loss (EL), Exposure at Default (EAD), and Loss Given Default (LGD).
 
-## 1️⃣ PD – Probability of Default
 
-**Definition:**
+1️⃣ Project Objective
 
-* The probability that a borrower will default within a specific time period.
+Compare different machine learning models for PD prediction:
 
-**Formula:**
+Logistic Regression
 
-```
-PD = (Number of Defaults) / (Total Number of Loans)
-```
+Decision Tree
 
-**Example:**
+Random Forest
 
-* 1000 loans, 30 defaults:
+Gradient Boosting
 
-```
-PD = 30 / 1000 = 0.03
-```
+Use the PD predictions to calculate Expected Loss (EL), Exposure at Default (EAD), and Loss Given Default (LGD).
 
----
+Identify high-risk loan segments for portfolio risk assessment.
 
-## 2️⃣ LGD – Loss Given Default
+2️⃣ Data Loading & Overview
 
-**Definition:**
+Dataset: Credit Risk Dataset on Kaggle
 
-* The proportion of the exposure that is lost if a default occurs.
-* Usually calculated as 1 minus the recovery rate.
+Columns include:
 
-**Formula:**
+person_age, person_income, person_home_ownership, person_emp_length
 
-```
-LGD = 1 - (Recovery Amount / Exposure at Default)
-```
+loan_intent, loan_grade, loan_amnt, loan_int_rate, loan_status
 
-**Example:**
+loan_percent_income, cb_person_default_on_file, cb_person_cred_hist_length
 
-* Loan amount = 100,000, recovered = 30,000:
+Initial steps:
 
-```
-LGD = 1 - (30,000 / 100,000) = 0.7
-```
+Check missing values and data types
 
----
+Understand distributions of numeric and categorical features
 
-## 3️⃣ EAD – Exposure at Default
+3️⃣ Data Cleaning & Preprocessing
 
-**Definition:**
+Handle missing values using median/mode or KNN imputation
 
-* The total value the bank is exposed to at the time of default.
-* Includes outstanding balance + utilized portion of unused credit lines.
+Detect and treat outliers using IQR or z-score methods
 
-**Formula:**
+Remove duplicate rows
 
-```
-EAD = Outstanding Balance + Utilized Portion of Unused Credit Lines
-```
+Encode categorical variables:
 
-**Example:**
+OneHot Encoding for loan_intent and loan_grade
 
-* Balance = 80,000, unused limit = 20,000:
+Label Encoding where appropriate
 
-```
-EAD = 80,000 + 20,000 = 100,000
-```
+Feature scaling: StandardScaler or MinMaxScaler applied to numeric features
 
----
+4️⃣ Exploratory Data Analysis (EDA)
 
-## 4️⃣ EL – Expected Loss
+Visualizations:
 
-**Definition:**
+Histograms, boxplots, and density plots for numeric features
 
-* The expected monetary loss on a loan or portfolio, combining PD, LGD, and EAD.
+Value counts for categorical variables to check class balance
 
-**Formula:**
+Correlation matrix and pairplots to examine feature relationships
 
-```
-EL = PD * LGD * EAD
-```
+Extracted insights to understand patterns affecting loan defaults
 
-**Example:**
+5️⃣ Feature Selection
 
-* PD = 0.03, LGD = 0.7, EAD = 100,000:
+Selected features based on:
 
-```
-EL = 0.03 * 0.7 * 100,000 = 2,100
-```
+Correlation analysis
+
+Feature importance from tree-based models
+
+Ensured models are trained on meaningful variables only
+
+6️⃣ PD Model Training
+
+Models trained:
+
+Logistic Regression
+
+Decision Tree
+
+Random Forest
+
+Gradient Boosting
+
+Hyperparameter tuning with GridSearchCV
+
+Evaluation metrics:
+
+Accuracy, Precision, Recall, F1-Score
+
+ROC-AUC
+
+Cross-validation with K-Fold for robust performance
+
+7️⃣ Risk Metrics Calculation
+
+PD (Probability of Default): Risk of borrower default
+
+EAD (Exposure at Default): Loan amount at risk (loan_amnt)
+
+LGD (Loss Given Default): Estimated loss proportion by loan type
+
+Example mappings: Personal/Education: 0.85, HomeImprovement/Medical: 0.60, Venture: 0.90
+
+Portfolio-level analysis:
+
+Total and average EL
+
+Average EL by loan type
+
+PD distribution and EL visualizations
+
+8️⃣ Key Insights
+
+Gradient Boosting performed best in PD prediction
+
+Certain loan types present higher expected losses, identifying higher-risk segments
+
+Visualizations provide actionable insights for portfolio risk management
